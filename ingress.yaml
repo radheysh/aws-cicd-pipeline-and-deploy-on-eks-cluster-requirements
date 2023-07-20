@@ -1,0 +1,127 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: phase3dev3inggress
+  annotations:     
+    alb.ingress.kubernetes.io/load-balancer-name: phase3dev3inggress
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:eu-central-1:238928607145:certificate/b9e07bbf-cc42-47b1-9a2d-765c8d5cde71
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS":443}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=1200
+    alb.ingress.kubernetes.io/tags: SecurityZone=A,Environment=Production,ManagedBy=dl-gdc-plt-svcs-public-cloud-managed-services@vodafone.com,Repository=ingress,Confidentiality=C3,TaggingVersion=V2.4,Project=VPC-BLOCKCHAIN
+spec:
+  ingressClassName: alb
+  rules:
+    - host: api.vpm.vodafone.com
+      http:
+        paths:
+          - path: /pmi
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-intgration
+                port:
+                  number: 5051
+          - path: /pma
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-access
+                port:
+                  number: 4000
+          - path: /pmb
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-business
+                port:
+                  number: 4001
+          - path: /pmt
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-analytics-engine
+                port:
+                  number: 5053
+          - path: /pmsi
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-back-integration
+                port:
+                  number: 4010
+          - path: /pma/api/v1/acl/certificate-enroll
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-scheduler
+                port:
+                  number: 5054
+          - path: /api/v1/pm/integration/getVoucherDetails
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-scheduler
+                port:
+                  number: 5054
+          - path: /api/v1/pm/spana/
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-scheduler
+                port:
+                  number: 5054
+          - path: /notifications/
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-business
+                port:
+                  number: 4001
+          - path: /edit-agreement/
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-business
+                port:
+                  number: 4001
+          - path: /pma/api/v1/acl/load
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-scheduler
+                port:
+                  number: 5054
+          - path: /pma/api/v1/user/super-admins
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-scheduler
+                port:
+                  number: 5054
+          - path: /pmb/api/v1/admin/load-config
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-scheduler
+                port:
+                  number: 5054
+          - path: /pma/api/v1/acl/update-acl 
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-scheduler
+                port:
+                  number: 5054
+          - path: /pma/api/v1/user/user-details
+            pathType: Prefix
+            backend:
+              service:
+                name: price-manager-scheduler
+                port:
+                  number: 5054					  
+ 
+ 
+ 
+ 

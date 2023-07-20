@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aws-auth
+  namespace: kube-system
+data:
+  mapRoles: |
+    - rolearn: arn:aws:iam::993707650522:role/dev2-price-manager-eks-node-role
+      username: system:node:{{EC2PrivateDNSName}}
+      groups:
+       - system:bootstrappers
+       - system:nodes
+  mapUsers: | 
+    - userarn: arn:aws:iam::993707650522:role/codebuild-dev3-price-manager-business-build-service-role  
+      username: codebuild-dev3-price-manager-business-build-service-role
+      groups: 
+        - system:masters
+    - userarn: arn:aws:iam::993707650522:role/codebuild-dev3-price-manager-integration-build-service-role  
+      username: codebuild-dev3-price-manager-integration-build-service-role 
+      groups: 
+        - system:masters
+

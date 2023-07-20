@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: price-manager-intgration
+spec:
+  selector:
+    matchLabels:
+      app: price-manager-intgration
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: price-manager-intgration
+    spec:
+      containers:
+        - name: price-manager-intgration
+          image: 997897476002.dkr.ecr.eu-central-1.amazonaws.com/price-manager-integration-repository:latest
+          ports:
+          - containerPort: 5051 
+          volumeMounts:
+            - mountPath: /scripts
+              name: app-script
+            - mountPath: /data
+              name: app-data   
+            - mountPath: /hlfbin
+              name: app-bin
+            - mountPath: /root/price-manager-integration/logs
+              name: app-log              
+      volumes:
+        - name: app-data
+          persistentVolumeClaim:
+            claimName: hlf-data-pvc
+        - name: app-script
+          persistentVolumeClaim:
+            claimName: hlf-script-pvc
+        - name: app-bin
+          persistentVolumeClaim:
+            claimName: hlf-hlfbin-pvc
+        - name: app-log
+          persistentVolumeClaim:
+            claimName: pmi-log-pvc
+            
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: price-manager-intgration
+spec:
+  ports:
+  - port: 5051
+    targetPort: 5051
+    protocol: TCP
+    nodePort: 30601
+  selector:
+    app: price-manager-intgration
+  type: NodePort

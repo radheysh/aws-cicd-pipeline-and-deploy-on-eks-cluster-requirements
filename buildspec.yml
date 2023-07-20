@@ -1,0 +1,42 @@
+version: 0.2
+phases:
+  install:
+    commands:
+      - curl -sS -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.10.3/2018-07-26/bin/linux/amd64/aws-iam-authenticator
+      - curl -sS -o kubectl https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/kubectl
+      - chmod +x ./kubectl ./aws-iam-authenticator
+      - export PATH=$PWD/:$PATH
+      - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+      - apt-get update && apt-get -y install jq python3-pip python3-dev && pip3 install --upgrade awscli
+      - REPOSITORY_URI=$AWS_ACCOUNT_ID.dkr.ecr.eu-central-1.amazonaws.com/$APPLICATION_NAME
+    runtime-versions:
+      java: openjdk8
+  pre_build:
+      commands:
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - $(aws ecr get-login --no-include-email)
+      - export KUBECONFIG=$HOME/.kube/config
+  build:
+    commands:
+      - mvn package
+      - echo $TAG
+      - echo REPOSITORY_URI
+      - echo TAG      
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG       
+  post_build:
+    commands:
+      - docker push $REPOSITORY_URI:latest
+      - aws sts get-caller-identity
+      - docker push $REPOSITORY_URI:$IMAGE_TAG    
+      - aws eks --region eu-central-1 update-kubeconfig --name $CLUSTER_NAME
+      - kubectl get all
+      - echo '#!/bin/bash' > installApp.sh
+      - echo 'deployment_details=$(kubectl describe deployment price-manager-intgration)' >> installApp.sh
+      - echo 'if [ -n "$deployment_details" ];' >> installApp.sh
+      - echo 'then kubectl delete deployment price-manager-intgration' >> installApp.sh   
+      - echo 'fi' >> installApp.sh    
+      - chmod 755 ./installApp.sh
+      - ./installApp.sh
+      - kubectl apply -f deployPriceManagerIntegration.yaml

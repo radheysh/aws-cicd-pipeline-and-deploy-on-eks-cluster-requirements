@@ -1,0 +1,479 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hlf-script-pvc
+spec:
+  storageClassName: hlfscripts
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: hlf-script-pv
+spec:
+  storageClassName: hlfscripts
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/scripts"
+    type: DirectoryOrCreate 
+
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hlf-data-pvc
+spec:
+  storageClassName: hlfdata
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: hlf-data-pv
+spec:
+  storageClassName: hlfdata
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/data"
+    type: DirectoryOrCreate    
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hlf-hlfbin-pvc
+spec:
+  storageClassName: hlfbin
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: hlf-hlfbin-pv
+spec:
+  storageClassName: hlfbin
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/hlfbin"
+    type: DirectoryOrCreate    
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pme-log-pvc
+spec:
+  storageClassName: pmelog
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pme-log-pv
+spec:
+  storageClassName: pmelog
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/logs/pme"
+    type: DirectoryOrCreate	
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pmi-log-pvc
+spec:
+  storageClassName: pmilog
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pmi-log-pv
+spec:
+  storageClassName: pmilog
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/logs/pmi"
+    type: DirectoryOrCreate	
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pma-log-pvc
+spec:
+  storageClassName: pmalog
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pma-log-pv
+spec:
+  storageClassName: pmalog
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/logs/pma"
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pmb-log-pvc
+spec:
+  storageClassName: pmblog
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pmb-log-pv
+spec:
+  storageClassName: pmblog
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/logs/pmb"
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pml-log-pvc
+spec:
+  storageClassName: pmllog
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pml-log-pv
+spec:
+  storageClassName: pmllog
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/logs/pml"
+    type: DirectoryOrCreate	
+    
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: hlf-checkpoint-pvc
+spec:
+  storageClassName: hlfcheckpoint
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: hlf-checkpoint-pv
+spec:
+  storageClassName: hlfcheckpoint
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/hlfcheckpoint/"
+    type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rca-backup-pvc
+spec:
+  storageClassName: rcaconfig
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: rca-backup-pv
+spec:
+  storageClassName: rcaconfig
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/data/rca-config/"
+    type: DirectoryOrCreate
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ica-backup-pvc
+spec:
+  storageClassName: icaconfig
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ica-backup-pv
+spec:
+  storageClassName: icaconfig
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/data/ica-config/"
+    type: DirectoryOrCreate
+
+  
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: full-hlf-pvc
+spec:
+  storageClassName: fullhlf
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: full-hlf-pv
+spec:
+  storageClassName: fullhlf
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/"
+    type: DirectoryOrCreate
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pmt-log-pvc
+spec:
+  storageClassName: pmtlog
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pmt-log-pv
+spec:
+  storageClassName: pmtlog
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/logs/pmt"
+    type: DirectoryOrCreate	
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pms-log-pvc
+spec:
+  storageClassName: pmslog
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pms-log-pv
+spec:
+  storageClassName: pmslog
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/logs/pms"
+    type: DirectoryOrCreate	
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pmc-log-pvc
+spec:
+  storageClassName: pmclog
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pmc-log-pv
+spec:
+  storageClassName: pmclog
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/logs/pmc"
+    type: DirectoryOrCreate	
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pmbi-log-pvc
+spec:
+  storageClassName: pmbilog
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pmbi-log-pv
+spec:
+  storageClassName: pmbilog
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/logs/pmbi"
+    type: DirectoryOrCreate	
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pmi-upload-pvc
+spec:
+  storageClassName: pmiuploadpvc
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pmi-upload-pv
+spec:
+  storageClassName: pmiuploadpvc
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/pmi-upload"
+    type: DirectoryOrCreate	
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pmt-upload-pvc
+spec:
+  storageClassName: pmtuploadpvc
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pmt-upload-pv
+spec:
+  storageClassName: pmtuploadpvc
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/hlf/application/pmt-upload"
+    type: DirectoryOrCreate	
+---
+
+
+
+    
